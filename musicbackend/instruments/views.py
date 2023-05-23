@@ -1,12 +1,18 @@
-from .models import *
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets
 from rest_framework.pagination import PageNumberPagination
-from django_filters.rest_framework import DjangoFilterBackend
-from .serializers import InstrumentsSerializer, BlogSerializer, Img_for_instrumentSerializer
-from rest_framework.decorators import action
+
+from .models import Blog, Img_for_instrument, Instruments
+from .serializers import (
+    BlogSerializer,
+    Img_for_instrumentSerializer,
+    InstrumentsSerializer,
+)
+
 
 class InstrumentsPagination(PageNumberPagination):
     page_size = 6
+
 
 class InstrumentsViewSet(viewsets.ModelViewSet):
     serializer_class = InstrumentsSerializer
@@ -17,12 +23,11 @@ class InstrumentsViewSet(viewsets.ModelViewSet):
         if not pk:
             return Instruments.objects.all()
         return Instruments.objects.filter(pk=pk)
-    
-    filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['category']
 
-    
-    
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ["category"]
+
+
 class ImagesViewSet(viewsets.ModelViewSet):
     serializer_class = Img_for_instrumentSerializer
     images = Img_for_instrument.objects.select_related().filter(instrument_id=6)
