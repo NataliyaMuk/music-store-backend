@@ -27,5 +27,10 @@ class InstrumentsSerializer(WritableNestedModelSerializer , serializers.ModelSer
 
     class Meta:
         model = Instruments
-        fields = ["article", "name", "price", "description", "characteristics", "category", "subcategory"]
+        fields = ["article", "name", "price", "description", "characteristics", "category", "subcategory", "main_img"]
         
+
+class BlogSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Blog
+        fields = '__all__'
