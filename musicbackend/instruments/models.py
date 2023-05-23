@@ -45,11 +45,24 @@ class Instruments(models.Model):
     characteristics = models.TextField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
     subcategory = models.ForeignKey(Subcategory, on_delete=models.CASCADE, null=True)
+    main_img = models.ImageField(upload_to="photos/%Y/%m/%d/", null=True)
 
     def __str__(self):
         return self.name
     
     class Meta:
         verbose_name = "Муз инструменты"
-        verbose_name_plural = "Муз инструменты"
-        ordering = ['name']
+        verbose_name = "Муз инструменты"
+        
+
+class Blog(models.Model):
+    title = models.CharField(max_length=255)
+    description = models.TextField(blank=True, null=True, default=None)
+    img = models.ImageField(upload_to='photos/%Y/%m/%d/', null=True)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        verbose_name = "Статья"
+        verbose_name_plural = "Статьи"
