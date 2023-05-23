@@ -2,11 +2,11 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets
 from rest_framework.pagination import PageNumberPagination
 
-from .models import Blog, Img_for_instrument, Instruments
+from .models import Blog, Img_for_instrument, Instruments, Subcategory
 from .serializers import (
     BlogSerializer,
     Img_for_instrumentSerializer,
-    InstrumentsSerializer,
+    InstrumentsSerializer, SubcategorySerializer,
 )
 
 
@@ -28,15 +28,22 @@ class InstrumentsViewSet(viewsets.ModelViewSet):
     filterset_fields = ["category"]
 
 
-class ImagesViewSet(viewsets.ModelViewSet):
-    serializer_class = Img_for_instrumentSerializer
-    images = Img_for_instrument.objects.select_related().filter(instrument_id=6)
+class SubCatViewSet(viewsets.ModelViewSet):
+    serializer_class = SubcategorySerializer
+    queryset = Subcategory.objects.all()
 
     def get_queryset(self):
-        pk = self.kwargs.get("pk")
-        if not pk:
-            return Img_for_instrument.objects.all()
-        return Img_for_instrument.objects.filter(pk=pk)
+        id = self.request.query_params.get('id')
+        return Subcategory.objects.filter(category_id=id)
+
+
+class ImagesViewSet(viewsets.ModelViewSet):
+    serializer_class = Img_for_instrumentSerializer
+    queryset = Img_for_instrument.objects.all()
+
+    def get_queryset(self):
+        id = self.request.query_params.get('id')
+        return Img_for_instrument.objects.filter(instrument_id=id)
 
 
 class BlogViewSet(viewsets.ModelViewSet):
