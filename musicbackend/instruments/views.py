@@ -11,7 +11,7 @@ from .serializers import (
 
 
 class InstrumentsPagination(PageNumberPagination):
-    page_size = 6
+    page_size = 9
 
 
 class InstrumentsViewSet(viewsets.ModelViewSet):
