@@ -1,5 +1,5 @@
+"""admin settings"""
 from django.contrib import admin
-from django.contrib.admin import SimpleListFilter
 from import_export.admin import ExportActionMixin
 
 # Register your models here.
@@ -8,28 +8,42 @@ from .models import *
 
 
 class SubcategoryInline(ExportActionMixin, admin.TabularInline):
+    """admin settings"""
+
     model = Subcategory
     extra = 0
 
 
 class ImgForInstrumentInline(ExportActionMixin, admin.TabularInline):
+    """admin settings"""
+
     model = Img_for_instrument
     extra = 0
 
 
 class InstrumentAdmin(admin.ModelAdmin):
-    list_display = [field.name for field in Instruments._meta.fields
-                    if field.name not in ['description', 'characteristics']]
+    """admin settings"""
+
+    list_display = [
+        field.name
+        for field in Instruments._meta.fields
+        if field.name not in ["description", "characteristics"]
+    ]
     inlines = [ImgForInstrumentInline]
-    search_fields = ['name']
-    list_filter = ('category', 'subcategory')
-    ordering = ('id', 'price',)
+    search_fields = ["name"]
+    list_filter = ("category", "subcategory")
+    ordering = (
+        "id",
+        "price",
+    )
 
     class Meta:
         model = Instruments
 
 
 class CategoryAdmin(ExportActionMixin, admin.ModelAdmin):
+    """admin settings"""
+
     list_display = [field.name for field in Category._meta.fields]
     inlines = [SubcategoryInline]
 
@@ -38,6 +52,8 @@ class CategoryAdmin(ExportActionMixin, admin.ModelAdmin):
 
 
 class SubcategoryAdmin(admin.ModelAdmin):
+    """admin settings"""
+
     list_display = [field.name for field in Subcategory._meta.fields]
 
     class Meta:
@@ -45,6 +61,8 @@ class SubcategoryAdmin(admin.ModelAdmin):
 
 
 class ImgForInstrumentAdmin(admin.ModelAdmin):
+    """admin settings"""
+
     list_display = [field.name for field in Img_for_instrument._meta.fields]
 
     class Meta:
@@ -52,8 +70,11 @@ class ImgForInstrumentAdmin(admin.ModelAdmin):
 
 
 class BlogAdmin(admin.ModelAdmin):
-    list_display = [field.name for field in Blog._meta.fields
-                    if field.name not in ['description']]
+    """admin settings"""
+
+    list_display = [
+        field.name for field in Blog._meta.fields if field.name not in ["description"]
+    ]
 
     class Meta:
         model = Blog

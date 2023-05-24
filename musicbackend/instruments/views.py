@@ -33,8 +33,8 @@ class SubCatViewSet(viewsets.ModelViewSet):
     queryset = Subcategory.objects.all()
 
     def get_queryset(self):
-        id = self.request.query_params.get('id')
-        return Subcategory.objects.filter(category_id=id)
+        sub_id = self.request.query_params.get('id')
+        return Subcategory.objects.filter(category_id=sub_id)
 
 
 class ImagesViewSet(viewsets.ModelViewSet):
@@ -42,8 +42,8 @@ class ImagesViewSet(viewsets.ModelViewSet):
     queryset = Img_for_instrument.objects.all()
 
     def get_queryset(self):
-        id = self.request.query_params.get('id')
-        return Img_for_instrument.objects.filter(instrument_id=id)
+        ins_id = self.request.query_params.get('id')
+        return Img_for_instrument.objects.filter(instrument_id=ins_id)
 
 
 class BlogViewSet(viewsets.ModelViewSet):
