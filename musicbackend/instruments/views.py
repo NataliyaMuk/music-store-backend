@@ -25,7 +25,7 @@ class InstrumentsViewSet(viewsets.ModelViewSet):
         return Instruments.objects.filter(pk=pk)
 
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ["category"]
+    filterset_fields = ["category", "subcategory"]
 
 
 class SubCatViewSet(viewsets.ModelViewSet):

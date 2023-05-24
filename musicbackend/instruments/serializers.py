@@ -12,7 +12,7 @@ class CategorySerializer(serializers.ModelSerializer):
 class SubcategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Subcategory
-        fields = ["category_id", "name"]
+        fields = ["id", "category_id", "name"]
 
 class Img_for_instrumentSerializer(serializers.ModelSerializer):
     class Meta:
