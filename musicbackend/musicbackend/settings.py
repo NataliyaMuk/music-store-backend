@@ -1,11 +1,17 @@
 from pathlib import Path
 import os
+import environ
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = "django-insecure-m!b^@r&jm*49nf2u!2t@sfmv!j$xuij6^c5wnv0j9$22y86!!e"
+env = environ.Env()
+environ.Env.read_env(env_file=os.path.join(BASE_DIR, '.env'))
 
-DEBUG = True
+# SECRET_KEY = "django-insecure-m!b^@r&jm*49nf2u!2t@sfmv!j$xuij6^c5wnv0j9$22y86!!e"
+SECRET_KEY = env('SECRET_KEY')
+
+# DEBUG = True
+DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = ["*"]
 
@@ -100,7 +106,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
