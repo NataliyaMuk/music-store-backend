@@ -1,0 +1,40 @@
+version: '3.10'
+
+services:
+  django:
+    container_name: docker_back
+    restart: always
+    build:
+      context: .
+      dockerfile: ./compose/django/Dockerfile
+    volumes:
+      - ./musicbackend:/back_proj
+    ports:
+      - 8086:8086
+    # depends_on:
+    #   celery
+    expose:
+      - 8086
+
+  # celery:
+  #   build:
+  #     context: .
+  #     dockerfile: ./compose/django/Dockerfile
+  #   command: celery -A my_project worker -l info
+  #   volumes:
+  #     ./musicbackend:/back_proj
+
+
+
+  front:
+    container_name: docker_front
+    restart: always
+    build:
+      context: .
+      dockerfile: ./compose/front/Dockerfile
+    volumes:
+      - ./musical-instrument-store:/front_proj
+    ports:
+      - 8080:8080
+    expose:
+      - 8080
