@@ -1,4 +1,6 @@
 """urls"""
+from django.conf import settings
+from django.conf.urls.static import static
 from django.urls import include, path
 from rest_framework import routers
 
@@ -12,4 +14,4 @@ router.register(r'subcategory', SubCatViewSet, basename='subcategory')
 
 urlpatterns = [
     path("api/v1/", include(router.urls)),  # http://127.0.0.1:8000/api/v1/instruments/
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
