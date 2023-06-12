@@ -12,6 +12,8 @@ WORKDIR ${PROJ_DIR}
 
 RUN pip install -r requirements.txt
 
+CMD ["celery", "-A", "proj", "worker", "-l", "INFO"]
+
 
 COPY ./compose/django/entry.sh /entry.sh
 RUN chmod +x /entry.sh

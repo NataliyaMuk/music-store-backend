@@ -144,8 +144,12 @@ CELERY_BROKER_URL = "redis://redis:6379"
 CELERY_RESULT_BACKEND = "redis://redis:6379"
 # CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 
+# EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
+# DEFAULT_FROM_EMAIL = 'noreply@email.com'
+# ADMINS = [('admin', 'admin@email.com'), ]
+# EMAIL_HOST = 'smtp-server'
+# EMAIL_PORT = '1025'
+
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-DEFAULT_FROM_EMAIL = 'noreply@email.com'
-ADMINS = [('admin', 'admin@email.com'), ]
 EMAIL_HOST = 'mailhog'
 EMAIL_PORT = '1025'
