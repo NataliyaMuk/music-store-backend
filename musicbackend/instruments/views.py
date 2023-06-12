@@ -8,6 +8,14 @@ from .serializers import (
     Img_for_instrumentSerializer,
     InstrumentsSerializer, SubcategorySerializer,
 )
+from django.http import HttpResponse
+
+from .tasks import add
+
+def home(request):
+    # send_mail_task.delay(('6mukomel9@gmail.com', ), 'Celery cookbook test', 'test', {})
+    add.delay(4, 4)
+    return HttpResponse('<h1>гружу кота </h1>')
 
 
 class InstrumentsPagination(PageNumberPagination):

@@ -11,20 +11,80 @@ services:
       - ./musicbackend:/back_proj
     ports:
       - 8086:8086
-    # depends_on:
-    #   celery
+    depends_on:
+      - celery
+      - redis
     expose:
       - 8086
 
-  # celery:
-  #   build:
-  #     context: .
-  #     dockerfile: ./compose/django/Dockerfile
-  #   command: celery -A my_project worker -l info
+
+  redis:
+    image: redis:alpine
+    restart: always
+
+  celery:
+    build:
+      context: .
+      dockerfile: ./compose/django/Dockerfile
+    command:
+      - celery -A musicbackend worker -l INFO
+    volumes:
+      - ./musicbackend:/back_proj
+    environment:
+      - DEBUG=1
+      - SECRET_KEY="django-insecure-m!b^@r&jm*49nf2u!2t@sfmv!j$xuij6^c5wnv0j9$22y86!!e"
+      - DJANGO_ALLOWED_HOSTS=localhost 127.0.01 [::1]
+    depends_on:
+      - redis
+
+  worker:
+    restart: always
+    build:
+      context: .
+      dockerfile: ./compose/django/Dockerfile
+    volumes:
+      - ./musicbackend:/back_proj
+    command: ['celery', '--workdir=./web', '-A', 'musicbackend', 'worker']
+
+
+
+
+  # celery-beat:
+  #   build: .
+  #   command:
+  #     celery -A core beat -l info
   #   volumes:
   #     ./musicbackend:/back_proj
+  #   environment:
+  #     - DEBUG=1
+  #     - SECRET_KEY="django-insecure-m!b^@r&jm*49nf2u!2t@sfmv!j$xuij6^c5wnv0j9$22y86!!e"
+  #     - DJANGO_ALLOWED_HOSTS=localhost 127.0.01 [::1]
+  #   depends_on:
+  #     - redis
 
-
+  # smtp-server:
+  #   image: mailhog/mailhog
+  #   container_name: mailhog
+  #   expose:
+  #     - 1025
+  #     - 8025
+  #   ports:
+  #     - '1025:1025'
+  #     - '8025:8025'
+  # flower: 
+  #   build: .
+  #   command: celery -A core flower
+  #   ports:
+  #     - 5555:5555
+  #   volumes:
+  #     ./musicbackend:/back_proj
+  #   environment:
+  #     - DEBUG=1
+  #     - SECRET_KEY="django-insecure-m!b^@r&jm*49nf2u!2t@sfmv!j$xuij6^c5wnv0j9$22y86!!e"
+  #     - DJANGO_ALLOWED_HOSTS=localhost 127.0.01 [::1]
+  #   depends_on:
+  #     - redis
+  #     - celery
 
   front:
     container_name: docker_front
@@ -34,7 +94,15 @@ services:
       dockerfile: ./compose/front/Dockerfile
     volumes:
       - ./musical-instrument-store:/front_proj
+      - /front_proj/node_modules
     ports:
       - 8080:8080
     expose:
       - 8080
+
+  # mailhog:
+  #   image: mailhog/mailhog:latest
+  #   restart: always
+  #   ports:
+  #     - 1025:1025
+  #     - 8025:8025

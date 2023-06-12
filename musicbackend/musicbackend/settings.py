@@ -26,7 +26,8 @@ INSTALLED_APPS = [
     "rest_framework",
     "corsheaders",
     "django_filters",
-    'drf_yasg'
+    'drf_yasg',
+
 ]
 
 MIDDLEWARE = [
@@ -134,3 +135,17 @@ REST_FRAMEWORK = {
 
 
 CORS_ORIGIN_ALLOW_ALL = True
+
+# CELERY_BROKER_URL = 'redis://localhost:6379'
+# CELERY_BROKER_URL = 'redis://redis:6379'
+CELERY_TIMEZONE = 'Europe/Moscow'
+# CELERY_RESULT_BACKEND = 'redis://redis:6379'
+CELERY_BROKER_URL = "redis://redis:6379"
+CELERY_RESULT_BACKEND = "redis://redis:6379"
+# CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+DEFAULT_FROM_EMAIL = 'noreply@email.com'
+ADMINS = [('admin', 'admin@email.com'), ]
+EMAIL_HOST = 'mailhog'
+EMAIL_PORT = '1025'
