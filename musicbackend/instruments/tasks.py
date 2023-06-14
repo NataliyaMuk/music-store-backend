@@ -16,3 +16,10 @@ def send_email():
     send_mail(subject, message, from_email, recipient_list, fail_silently=False)
 
 
+@shared_task
+def send_report():
+    subject = 'Report'
+    message = 'Report about site'
+    from_email = 'your_email@example.com'
+    recipient_list = ['recipient_email@example.com']
+    send_mail(subject, message, from_email, recipient_list, fail_silently=False)
