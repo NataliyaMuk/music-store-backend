@@ -1,17 +1,13 @@
 from pathlib import Path
 import os
-# import environ
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# env = environ.Env()
-# environ.Env.read_env(env_file=os.path.join(BASE_DIR, '.env'))
 
 SECRET_KEY = "django-insecure-m!b^@r&jm*49nf2u!2t@sfmv!j$xuij6^c5wnv0j9$22y86!!e"
-# SECRET_KEY = env('SECRET_KEY')
 
 DEBUG = True
-# DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = ["*"]
 
@@ -27,7 +23,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "django_filters",
     'drf_yasg',
-
+    'django_celery_beat',
 ]
 
 MIDDLEWARE = [
@@ -136,19 +132,16 @@ REST_FRAMEWORK = {
 
 CORS_ORIGIN_ALLOW_ALL = True
 
-# CELERY_BROKER_URL = 'redis://localhost:6379'
-# CELERY_BROKER_URL = 'redis://redis:6379'
+
 CELERY_TIMEZONE = 'Europe/Moscow'
-# CELERY_RESULT_BACKEND = 'redis://redis:6379'
 CELERY_BROKER_URL = "redis://redis:6379"
 CELERY_RESULT_BACKEND = "redis://redis:6379"
-# CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 
-# EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
-# DEFAULT_FROM_EMAIL = 'noreply@email.com'
-# ADMINS = [('admin', 'admin@email.com'), ]
-# EMAIL_HOST = 'smtp-server'
-# EMAIL_PORT = '1025'
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
+
+
+
+
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'mailhog'

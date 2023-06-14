@@ -10,11 +10,10 @@ from .serializers import (
 )
 from django.http import HttpResponse
 
-from .tasks import add, send_email
+from .tasks import send_email
 
 def home(request):
     send_email.delay()
-    add.delay(4, 4)
     return HttpResponse('<h1> отправка сообщения на почту </h1>')
 
 
