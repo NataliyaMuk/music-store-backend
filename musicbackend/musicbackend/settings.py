@@ -1,6 +1,9 @@
 from pathlib import Path
 import os
 # import environ
+from celery.schedules import crontab
+
+import instruments.tasks
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -27,6 +30,7 @@ INSTALLED_APPS = [
     "corsheaders",
     "django_filters",
     'drf_yasg',
+    'django_celery_beat',
 
 ]
 
@@ -142,7 +146,14 @@ CELERY_TIMEZONE = 'Europe/Moscow'
 # CELERY_RESULT_BACKEND = 'redis://redis:6379'
 CELERY_BROKER_URL = "redis://redis:6379"
 CELERY_RESULT_BACKEND = "redis://redis:6379"
-# CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
+CELERY_BEAT_SCHEDULE = {
+    "sample_task": {
+        # "task": "musicbackend.views.home",
+        "task": "instruments.tasks.send_report",
+        "schedule": crontab(minute="*/1"),
+    },
+}
 
 # EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'
 # DEFAULT_FROM_EMAIL = 'noreply@email.com'
