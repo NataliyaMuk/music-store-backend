@@ -1,6 +1,13 @@
 from pathlib import Path
 import os
+<<<<<<< HEAD
 
+=======
+# import environ
+from celery.schedules import crontab
+
+import instruments.tasks
+>>>>>>> c2ad37208c2820a4d6fdf491f4b614aa1605bc72
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -24,6 +31,10 @@ INSTALLED_APPS = [
     "django_filters",
     'drf_yasg',
     'django_celery_beat',
+<<<<<<< HEAD
+=======
+
+>>>>>>> c2ad37208c2820a4d6fdf491f4b614aa1605bc72
 ]
 
 MIDDLEWARE = [
@@ -136,6 +147,17 @@ CORS_ORIGIN_ALLOW_ALL = True
 CELERY_TIMEZONE = 'Europe/Moscow'
 CELERY_BROKER_URL = "redis://redis:6379"
 CELERY_RESULT_BACKEND = "redis://redis:6379"
+<<<<<<< HEAD
+=======
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
+CELERY_BEAT_SCHEDULE = {
+    "sample_task": {
+        # "task": "musicbackend.views.home",
+        "task": "instruments.tasks.send_report",
+        "schedule": crontab(minute="*/1"),
+    },
+}
+>>>>>>> c2ad37208c2820a4d6fdf491f4b614aa1605bc72
 
 CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 
