@@ -65,21 +65,23 @@ services:
       - mailhog
       - django
 
-
-  # flower: 
-  #   build: .
-  #   command: celery -A core flower
-  #   ports:
-  #     - 5555:5555
-  #   volumes:
-  #     ./musicbackend:/back_proj
-  #   environment:
-  #     - DEBUG=1
-  #     - SECRET_KEY="django-insecure-m!b^@r&jm*49nf2u!2t@sfmv!j$xuij6^c5wnv0j9$22y86!!e"
-  #     - DJANGO_ALLOWED_HOSTS=localhost 127.0.01 [::1]
-  #   depends_on:
-  #     - redis
-  #     - celery
+  flower: 
+    build:
+      context: .
+      dockerfile: ./compose/flower/Dockerfile
+    # command: celery -A core flower
+    ports:
+      - 5555:5555
+    volumes:
+      - ./musicbackend:/back_proj
+    environment:
+      - DEBUG=1
+      - SECRET_KEY="django-insecure-m!b^@r&jm*49nf2u!2t@sfmv!j$xuij6^c5wnv0j9$22y86!!e"
+      - DJANGO_ALLOWED_HOSTS=localhost 127.0.01 [::1]
+    depends_on:
+      - redis
+      - celery
+      - celery-beat
 
   front:
     container_name: docker_front
