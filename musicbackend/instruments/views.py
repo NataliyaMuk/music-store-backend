@@ -12,6 +12,7 @@ from django.http import HttpResponse
 
 from .tasks import send_email
 
+
 def home(request):
     send_email.delay()
     return HttpResponse('<h1> отправка сообщения на почту </h1>')
