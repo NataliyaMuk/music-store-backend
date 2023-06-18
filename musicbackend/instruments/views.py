@@ -12,6 +12,7 @@ from django.http import HttpResponse
 
 from .tasks import add, send_email
 
+
 def home(request):
     send_email.delay()
     add.delay(4, 4)
