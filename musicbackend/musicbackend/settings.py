@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.github',
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
@@ -169,7 +170,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'mailhog'
 EMAIL_PORT = '1025'
 
-SITE_ID = 1
+SITE_ID = 2
+ACCOUNT_EMAIL_VERIFICATION = 'none'
 
 # ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS =1
 # ACCOUNT_EMAIL_REQUIRED = True
@@ -178,3 +180,15 @@ SITE_ID = 1
 # ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 86400
 # ACCOUNT_LOGOUT_REDIRECT_URL ='/accounts/login/'
 LOGIN_REDIRECT_URL = '/'
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
