@@ -1,7 +1,7 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets
 from rest_framework.pagination import PageNumberPagination
-
+from django.core.cache import cache
 from .models import Blog, Img_for_instrument, Instruments, Subcategory
 from .serializers import (
     BlogSerializer,
@@ -29,6 +29,7 @@ class InstrumentsViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         pk = self.kwargs.get("pk")
+        print(cache)
         if not pk:
             return Instruments.objects.all()
         return Instruments.objects.filter(pk=pk)
