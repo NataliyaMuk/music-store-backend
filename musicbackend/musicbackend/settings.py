@@ -19,6 +19,8 @@ DEBUG = True
 ALLOWED_HOSTS = ["*"]
 
 INSTALLED_APPS = [
+    'chat',
+    'instant',
     "django.contrib.admin",
     'allauth',
     'allauth.account',
@@ -37,6 +39,8 @@ INSTALLED_APPS = [
     "django_filters",
     'drf_yasg',
     'django_celery_beat',
+    # 'rest_messaging',
+    # 'rest_messaging_centrifugo',
 ]
 
 MIDDLEWARE = [
@@ -48,6 +52,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
+    # 'rest_messaging.middleware.MessagingMiddleware'
 ]
 
 ROOT_URLCONF = "musicbackend.urls"
@@ -193,13 +198,28 @@ SOCIALACCOUNT_PROVIDERS = {
     }
 }
 
-CACHES = {
-    'default': {
-        'BACKEND': 'django_redis.cache.RedisCache',
-        'LOCATION': 'redis://127.0.0.1:6379/1',
-        'OPTIONS': {
-            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
-        },
-        "KEY_PREFIX": "example"
-    }
-}
+CENTRIFUGO_PORT = 8802
+# the centrifugo message channel, do not change this value
+CENTRIFUGO_MESSAGE_NAMESPACE = "messages"
+# the centrifugo thread channel, do not change this value
+CENTRIFUGO_THREAD_NAMESPACE = "threads"
+# centrifugo config
+# note that the following settings refer to centrifugE_... 
+# because it is the old name of the project
+# change this to your domain/your port in production
+CENTRIFUGE_ADDRESS = 'http://localhost:{0}/'.format(CENTRIFUGO_PORT)
+# change this to the key you put in config.json (see above)
+CENTRIFUGE_SECRET = 'django-insecure-m!b^@r&jm*49nf2u!2t@sfmv!j$xuij6^c5wnv0j9$22y86!!e'
+CENTRIFUGO_API_KEY = ''
+CENTRIFUGE_TIMEOUT = 5 
+
+# CACHES = {
+#     'default': {
+#         'BACKEND': 'django_redis.cache.RedisCache',
+#         'LOCATION': 'redis://127.0.0.1:6379/1',
+#         'OPTIONS': {
+#             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+#         },
+#         "KEY_PREFIX": "example"
+#     }
+# }

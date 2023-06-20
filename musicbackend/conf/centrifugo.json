@@ -1,0 +1,20 @@
+{
+    "secret": "django-insecure-m!b^@r&jm*49nf2u!2t@sfmv!j$xuij6^c5wnv0j9$22y86!!e",
+    "anonymous": false,
+    "publish": false,
+    "watch": false,
+    "presence": true,
+    "join_leave": false,
+    "history_size": 0,
+    "history_lifetime": 0,
+    "namespaces": [
+        {
+            "name": "messages",
+            "anonymous": false
+        },
+        {
+            "name": "threads",
+            "anonymous": false
+        }
+    ]
+}

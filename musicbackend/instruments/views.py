@@ -1,7 +1,6 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets
 from rest_framework.pagination import PageNumberPagination
-from django.core.cache import cache
 from .models import Blog, Img_for_instrument, Instruments, Subcategory
 from .serializers import (
     BlogSerializer,
@@ -11,6 +10,8 @@ from .serializers import (
 from django.http import HttpResponse
 
 from .tasks import add, send_email
+from instant.producers import publish
+from cent import Client
 
 
 def home(request):
@@ -29,7 +30,6 @@ class InstrumentsViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         pk = self.kwargs.get("pk")
-        print(cache)
         if not pk:
             return Instruments.objects.all()
         return Instruments.objects.filter(pk=pk)
@@ -58,7 +58,7 @@ class ImagesViewSet(viewsets.ModelViewSet):
 
 class BlogViewSet(viewsets.ModelViewSet):
     serializer_class = BlogSerializer
-
+    
     def get_queryset(self):
         pk = self.kwargs.get("pk")
         if not pk:
