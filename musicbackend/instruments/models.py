@@ -53,6 +53,19 @@ class Instruments(models.Model):
     class Meta:
         verbose_name = "Муз инструменты"
         verbose_name = "Муз инструменты"
+    
+    # def to_json(self):
+    #     return {
+    #         'id': self.id,
+    #         'article': self.article,
+    #         'name': self.name,
+    #         'price': self.price,
+    #         'description': self.description,
+    #         'characteristics': self.characteristics,
+    #         'category': self.category,
+    #         'subcategory': self.subcategory,
+    #         'main_img': self.main_img,
+    #     }
         
 
 class Blog(models.Model):

@@ -14,4 +14,3 @@ RUN pip install -r requirements.txt
 
 
 CMD ["celery", "-A", "musicbackend", "worker", "-l", "INFO"]
-

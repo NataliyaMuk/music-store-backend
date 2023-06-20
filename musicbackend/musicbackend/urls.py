@@ -8,11 +8,7 @@ from .yasg import urlpatterns as doc_urls
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", include("instruments.urls")),
-    path('accounts/', include('allauth.urls')),
-    path('chat/', include('chat.urls')),
-    # path(r'^messaging/', include('rest_messaging.urls', namespace='rest_messaging')),
-    # path(r'^messaging/centrifugo/', include('rest_messaging_centrifugo.urls', namespace='rest_messaging_centrifugo')),
-    # path("instant/", include("instant.urls")),
+    path('accounts/', include('allauth.urls'))
 ]
 
 urlpatterns += doc_urls
