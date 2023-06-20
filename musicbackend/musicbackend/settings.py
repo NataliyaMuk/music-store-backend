@@ -24,12 +24,13 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.github',
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    'django.contrib.sites',
+    # 'django.contrib.sites',
     "instruments.apps.InstrumentsConfig",
     "rest_framework",
     "corsheaders",
@@ -161,7 +162,7 @@ CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
 CELERY_BEAT_SCHEDULE = {
     "sample_task": {
         "task": "instruments.tasks.send_report",
-        "schedule": crontab(minute="*/1"),
+        "schedule": crontab(minute="*/15"),
     },
 }
 
@@ -169,7 +170,8 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'mailhog'
 EMAIL_PORT = '1025'
 
-SITE_ID = 1
+SITE_ID = 2
+ACCOUNT_EMAIL_VERIFICATION = 'none'
 
 # ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS =1
 # ACCOUNT_EMAIL_REQUIRED = True
@@ -178,3 +180,31 @@ SITE_ID = 1
 # ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 86400
 # ACCOUNT_LOGOUT_REDIRECT_URL ='/accounts/login/'
 LOGIN_REDIRECT_URL = '/'
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
+
+REDIS_HOST = os.environ.get('REDIS_HOST', 'localhost')
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://redis:6379/1',
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        },
+        # "KEY_PREFIX": "example"
+    }
+}
+
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_CACHE_ALIAS = "default"

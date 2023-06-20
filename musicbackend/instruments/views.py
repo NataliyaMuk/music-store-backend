@@ -1,7 +1,7 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets
 from rest_framework.pagination import PageNumberPagination
-
+from django.core.cache import cache
 from .models import Blog, Img_for_instrument, Instruments, Subcategory
 from .serializers import (
     BlogSerializer,
@@ -9,7 +9,6 @@ from .serializers import (
     InstrumentsSerializer, SubcategorySerializer,
 )
 from django.http import HttpResponse
-
 from .tasks import send_email
 
 
@@ -28,13 +27,30 @@ class InstrumentsViewSet(viewsets.ModelViewSet):
 
     def get_queryset(self):
         pk = self.kwargs.get("pk")
-        if not pk:
-            return Instruments.objects.all()
-        return Instruments.objects.filter(pk=pk)
+
+        if 'instruments_key' in cache:
+            data = cache.get('instruments_key')
+            if not pk:
+                print("ИСПОЛЬЗУЕТСЯ КЭШ")
+                return data
+            return data.filter(pk=pk)
+        else:
+            instruments = Instruments.objects.all()
+            cache.set('instruments_key', instruments, 3600)
+            if not pk:
+                print("сОЗДАЕТСЯ КЭШ")
+                return instruments
+            return instruments.filter(pk=pk)
+            
 
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ["category", "subcategory"]
 
+#     else:
+#         products = Product.objects.all()
+#         results = [product.to_json() for product in products]
+#         cache.set(product, results, timeout=CACHE_TTL)
+#         return Response(results, status=status.HTTP_201_CREATED)
 
 class SubCatViewSet(viewsets.ModelViewSet):
     serializer_class = SubcategorySerializer

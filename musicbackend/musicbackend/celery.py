@@ -17,7 +17,7 @@ app.config_from_object('django.conf:settings', namespace='CELERY')
 app.conf.beat_schedule = {
     'send_report': {
         'task': 'musicbackend.tasks.send_report',
-        'schedule': crontab(minute='*/1')
+        'schedule': crontab(minute='*/15')
     },
 }
 

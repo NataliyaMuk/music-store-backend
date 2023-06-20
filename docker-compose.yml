@@ -16,6 +16,9 @@ services:
       - redis
     expose:
       - 8086
+    environment:
+      - REDIS_HOST=redis
+
 
   redis:
     image: redis:alpine
@@ -35,31 +38,11 @@ services:
     depends_on:
       - redis
 
-<<<<<<< HEAD
-=======
-
-
-  # worker:
-  #   restart: always
-  #   build:
-  #     context: .
-  #     dockerfile: ./compose/django/Dockerfile
-  #   command: celery -A musicbackend worker -l info
-  #   volumes:
-  #     - ./musicbackend:/back_proj
-  #   depends_on:
-  #     - celery
-
->>>>>>> c2ad37208c2820a4d6fdf491f4b614aa1605bc72
   celery-beat:
     restart: always
     build:
       context: .
       dockerfile: ./compose/celery-beat/Dockerfile
-<<<<<<< HEAD
-=======
-    # command: celery -A core beat -l info
->>>>>>> c2ad37208c2820a4d6fdf491f4b614aa1605bc72
     volumes:
       - ./musicbackend:/back_proj
     environment:
@@ -68,17 +51,11 @@ services:
       - DJANGO_ALLOWED_HOSTS=localhost 127.0.01 [::1]
     depends_on:
       - redis
-<<<<<<< HEAD
-=======
-      - mailhog
-      - django
->>>>>>> c2ad37208c2820a4d6fdf491f4b614aa1605bc72
 
   flower: 
     build:
       context: .
       dockerfile: ./compose/flower/Dockerfile
-    # command: celery -A core flower
     ports:
       - 5555:5555
     volumes:

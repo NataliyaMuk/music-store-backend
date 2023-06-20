@@ -15,10 +15,6 @@ RUN pip install -r requirements.txt
 
 COPY ./compose/django/entry.sh /entry.sh
 RUN chmod +x /entry.sh
-<<<<<<< HEAD
-ENTRYPOINT [ "/entry.sh" ]
-=======
+
 ENTRYPOINT ["sh", "/entry.sh" ]
 
-# CMD ["celery", "-A", "musicbackend", "worker", "-l", "INFO"]
->>>>>>> c2ad37208c2820a4d6fdf491f4b614aa1605bc72
