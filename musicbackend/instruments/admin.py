@@ -21,6 +21,14 @@ class ImgForInstrumentInline(ExportActionMixin, admin.TabularInline):
     extra = 0
 
 
+class RequestAdmin(admin.ModelAdmin):
+    list_display = [field.name for field in Request._meta.fields]
+
+    class Meta:
+        model = Request
+
+
+
 class InstrumentAdmin(admin.ModelAdmin):
     """admin settings"""
 
@@ -89,3 +97,5 @@ admin.site.register(Subcategory, SubcategoryAdmin)
 admin.site.register(Img_for_instrument, ImgForInstrumentAdmin)
 
 admin.site.register(Blog, BlogAdmin)
+
+admin.site.register(Request, RequestAdmin)

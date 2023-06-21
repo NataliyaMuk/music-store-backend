@@ -19,6 +19,10 @@ app.conf.beat_schedule = {
         'task': 'musicbackend.tasks.send_report',
         'schedule': crontab(minute='*/15')
     },
+    "get_cache": {
+        'task': 'instruments.tasks.get_cache',
+        "schedule": crontab(minute="*/1"),
+    }
 }
 
 
