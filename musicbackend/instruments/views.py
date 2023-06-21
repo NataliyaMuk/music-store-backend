@@ -46,11 +46,6 @@ class InstrumentsViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ["category", "subcategory"]
 
-#     else:
-#         products = Product.objects.all()
-#         results = [product.to_json() for product in products]
-#         cache.set(product, results, timeout=CACHE_TTL)
-#         return Response(results, status=status.HTTP_201_CREATED)
 
 class SubCatViewSet(viewsets.ModelViewSet):
     serializer_class = SubcategorySerializer

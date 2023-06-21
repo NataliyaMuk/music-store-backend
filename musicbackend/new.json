@@ -1,0 +1,10 @@
+[
+    {
+      "model": "instruments.subcategory",
+      "pk": 39,
+      "fields": {
+        "category_id": 1,
+        "name": "ГИТАРЫ РОК-ЗВЕЗД"
+      }
+    }
+]
